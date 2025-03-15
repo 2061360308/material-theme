@@ -25,7 +25,7 @@
 #### UMD
 
 ```html
-<script src="https://cdn.example.com/material-theme.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/2061360308/material-theme@main/dist/material-theme.umd.js"></script>
 ```
 
 ```javascript
@@ -46,7 +46,8 @@ async function generateScheme(imageFile) {
 
 ```html
 <script type="module">
-  const { ColorThemeExtractor } = await import("./src/index");
+  import { ColorThemeExtractor } from 'https://cdn.jsdelivr.net/gh/2061360308/material-theme@main/dist/material-theme.mjs'
+  
   const extractor = new ColorThemeExtractor();
 
   // 从图片生成配色方案
