@@ -47,7 +47,7 @@ async function generateScheme(imageFile) {
 ```html
 <script type="module">
   import { ColorThemeExtractor } from 'https://cdn.jsdelivr.net/gh/2061360308/material-theme@main/dist/material-theme.mjs'
-  
+
   const extractor = new ColorThemeExtractor();
 
   // 从图片生成配色方案
@@ -202,6 +202,15 @@ npm run build
 - Color Thief
 - 原生 DOM API
 
+## 鸣谢
+主题色切换动画效果来自
+[@Author 远方os](https://juejin.cn/post/7361721559239524390)
+
+[material-color-utilities](https://github.com/material-foundation/material-color-utilities)
+Color libraries for Material You
+
+[colorthief](https://github.com/lokesh/color-thief)
+Grab the color palette from an image using just Javascript. Works in the browser and in Node.
 ## 许可证
 
 MIT
