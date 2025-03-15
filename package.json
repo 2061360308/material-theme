@@ -5,9 +5,17 @@
   "main": "dist/color-theme-extractor.umd.js",
   "module": "dist/color-theme-extractor.mjs",
   "types": "dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
+  "exports": {
+    ".": {
+      "import": "./dist/material-theme.mjs",
+      "require": "./dist/material-theme.umd.js"
+    }
+  },
+  "files": ["dist/*"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/2061360308/material-theme.git"
+  },
   "scripts": {
     "build": "vite build",
     "dev": "vite",

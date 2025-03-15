@@ -69,7 +69,7 @@ async function generateScheme(imageFile) {
 
 ```bash
 # 克隆仓库
-git clone []
+git clone https://github.com/2061360308/material-theme
 
 # 安装依赖
 npm install
