@@ -52,12 +52,18 @@ function injectViewTransitionStyles() {
 }
 export class ColorThemeExtractor {
   private colorThief: ColorThief;
+  private needTransition: boolean;
 
-  constructor() {
+  constructor({
+    needTransition = true,
+  } = {}) {
     this.colorThief = new ColorThief();
+    this.needTransition = needTransition;
 
     // 在title的最后添加一个style标签，用于支持后续自定义动画
-    injectViewTransitionStyles();
+    if (needTransition) {
+      injectViewTransitionStyles();
+    }
   }
 
   hexFromArgb(argb: number) {
@@ -109,6 +115,11 @@ export class ColorThemeExtractor {
       paletteTones?: number[];
     }
   ): void {
+
+    if (!this.needTransition) {
+      applyTheme(theme, options);
+      return;
+    }
 
     const transition = document.startViewTransition(() => {
       // 在 startViewTransition 中修改 DOM 状态产生动画
