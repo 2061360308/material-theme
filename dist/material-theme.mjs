@@ -3293,8 +3293,11 @@ function injectViewTransitionStyles() {
   }
 }
 class ColorThemeExtractor {
-  constructor() {
+  constructor({
+    needTransition = true
+  } = {}) {
     __publicField(this, "colorThief");
+    __publicField(this, "needTransition");
     __publicField(this, "transitionAnimate", (reverse = false) => {
       let startX;
       let startY;
@@ -3319,19 +3322,26 @@ class ColorThemeExtractor {
           clipPath: reverse ? clipPath.reverse() : clipPath
         },
         {
-          duration: 300,
+          duration: 350,
           // 如果要切换到暗色主题，我们应该裁剪 view-transition-old(root) 的内容
           pseudoElement: reverse ? "::view-transition-old(root)" : "::view-transition-new(root)"
         }
       );
     });
     this.colorThief = new u();
-    injectViewTransitionStyles();
+    this.needTransition = needTransition;
+    if (needTransition) {
+      injectViewTransitionStyles();
+    }
   }
   hexFromArgb(argb) {
     return hexFromArgb(argb);
   }
   applyTheme(theme, options) {
+    if (!this.needTransition) {
+      applyTheme(theme, options);
+      return;
+    }
     const transition = document.startViewTransition(() => {
       applyTheme(theme, options);
       document.body.classList.add("apply-bg");
@@ -3358,7 +3368,7 @@ class ColorThemeExtractor {
         transition2.finished.then(() => {
           document.documentElement.classList.remove("reverse-bg");
         });
-      }, 300);
+      }, 350);
     });
   }
   /**
