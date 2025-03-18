@@ -272,9 +272,12 @@
               ).matches;
               console.log("systemDark: ", systemDark);
 
+              console.log("materialYouScheme: ", materialYouScheme);
+
               extractor.applyTheme(materialYouScheme, {
                 target: document.body,
                 dark: systemDark,
+                paletteTones: [10, 60],
               });
             };
           };

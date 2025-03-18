@@ -62,11 +62,30 @@ async function generateScheme(imageFile) {
 </script>
 ```
 
+#### 补充
+
+applyTheme 函数定义如下
+
+```ts
+/**
+ * Apply a theme to an element
+ *
+ * @param theme Theme object
+ * @param options Options
+ */
+export declare function applyTheme(theme: Theme, options?: {
+    dark?: boolean;
+    target?: HTMLElement;
+    brightnessSuffix?: boolean;
+    paletteTones?: number[];
+}): void;
+```
+
+更详细示例请看下方API介绍
+
 ## 🖥️ 开发指南
 
-### 项目结构
-
-## 安装
+### 安装
 
 ```bash
 # 克隆仓库
@@ -76,9 +95,7 @@ git clone https://github.com/2061360308/material-theme
 npm install
 ```
 
-## 使用方法
-
-### 作为开发工具使用
+### 运行示例
 
 1. 启动开发服务器：
 
@@ -89,27 +106,12 @@ npm run dev
 2. 在浏览器中打开显示的地址（通常是 `http://localhost:5173`）
 3. 上传图片即可查看生成的颜色方案
 
-### 在项目中使用
-
-```typescript
-import { ColorThemeExtractor } from "color-theme-extractor";
-
-const extractor = new ColorThemeExtractor();
-
-// 从图片元素提取颜色
-const imageElement = document.querySelector("img");
-const mainColor = await extractor.extractMainColor(imageElement);
-
-// 调整颜色使其更适合作为主题色
-const adjustedColor = extractor.adjustColor(mainColor);
-
-// 生成完整的颜色方案
-const colorScheme = extractor.generateFullColorScheme(adjustedColor);
-```
-
 ## API 文档
 
 ### ColorThemeExtractor
+
+needTransition: boolean, 默认值true。是否启用主题切换过渡动画
+    
 
 #### extractMainColor(imageSource: string | HTMLImageElement): Promise<RGB>
 
@@ -135,7 +137,28 @@ applyTheme(
   )
 ```
 
-应用主题色，更改了`material-color-utilities`原先的方法，会自动应用过渡动画。
+应用主题色，更改了`material-color-utilities`原先的方法，会自动应用过渡动画（示例化时使用false可修改默认行为）。
+
+**brightnessSuffix**：为true时会同时将light和dark模式的颜色都挂载为元素的css变量，并以-dark和-light加以区分
+
+**paletteTones**：接收一个数组来指定需要生成哪些色调（0-100，数值越高颜色越亮）。这些色调会被转换为对应的 CSS 变量，便于在页面中直接使用或进一步处理，如动态生成渐变等高级应用。例如给定[10, 60]则会在原有基础上多添加以下css变量
+
+```css
+:root {
+    --md-ref-palette-primary-primary10: #0c2000;
+    --md-ref-palette-primary-primary60: #6f9e48;
+    --md-ref-palette-secondary-secondary10: #141e0c;
+    --md-ref-palette-secondary-secondary60: #88957a;
+    --md-ref-palette-tertiary-tertiary10: #00201f;
+    --md-ref-palette-tertiary-tertiary60: #6b9997;
+    --md-ref-palette-neutral-neutral10: #1a1c18;
+    --md-ref-palette-neutral-neutral60: #90918b;
+    --md-ref-palette-neutral-variant-neutral-variant10: #191d14;
+    --md-ref-palette-neutral-variant-neutral-variant60: #8e9286;
+    --md-ref-palette-error-error10: #410002;
+    --md-ref-palette-error-error60: #ff5449;
+}
+```
 
 #### generateThemeScheme(baseColor: RGB)
 
